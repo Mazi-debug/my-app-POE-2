@@ -1,3 +1,4 @@
+// Import core React and React Native components
 import React from 'react';
 import {
   View,
@@ -10,44 +11,48 @@ import {
   Alert,
 } from 'react-native';
 
+// -----------------------------
+// Type Definitions
+// -----------------------------
+
+// Interface describing the structure of a menu item object
 export interface MenuItem {
-  id: string;
-  name: string;
-  description: string;
-  course: string;
-  price: number;
-  image?: string;
+  id: string;          // Unique identifier for each dish
+  name: string;        // Dish name
+  description: string; // Short summary or ingredients
+  course: string;      // Course category (Breakfast, Lunch, Dinner, etc.)
+  price: number;       // Price of the dish
+  image?: string;      // Optional image URL
 }
 
+// Props expected by the HomeScreen component
 interface HomeScreenProps {
-  menuItems: MenuItem[];
-  onAddPress: () => void;
-  onDeleteItem: (id: string) => void;
+  menuItems: MenuItem[];          // Array of menu items to display
+  onAddPress: () => void;         // Callback when the "Add Dish" button is pressed
+  onDeleteItem: (id: string) => void; // Callback when a dish is deleted
 }
+
+// -----------------------------
+// HomeScreen Component
+// -----------------------------
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ menuItems, onAddPress, onDeleteItem }) => {
- // Handle delete with confirmation
+  // Show confirmation alert before deleting a dish
   const handleDelete = (id: string, name: string) => {
     Alert.alert(
-      'Delete Dish',
-      `Are you sure you want to delete "${name}"?`,
+      'Delete Dish',                        // Alert title
+      `Are you sure you want to delete "${name}"?`, // Confirmation message
       [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: () => onDeleteItem(id),
-        },
+        { text: 'Cancel', style: 'cancel' }, // Cancel option
+        { text: 'Delete', style: 'destructive', onPress: () => onDeleteItem(id) }, // Confirm delete
       ]
     );
   };
 
-  // Render a menu item card
+  // Render a single menu item card
   const renderMenuItem = ({ item }: { item: MenuItem }) => (
     <View style={styles.menuCard}>
+      {/* Display dish image if available */}
       {item.image && (
         <Image 
           source={{ uri: item.image }} 
@@ -55,12 +60,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ menuItems, onAddPress, onDelete
           resizeMode="cover"
         />
       )}
+
+      {/* Card content section */}
       <View style={styles.cardContent}>
+        {/* Header: dish name and course tag */}
         <View style={styles.menuCardHeader}>
           <Text style={styles.dishName}>{item.name}</Text>
           <Text style={styles.courseTag}>{item.course}</Text>
         </View>
+
+        {/* Description of the dish */}
         <Text style={styles.description}>{item.description}</Text>
+
+        {/* Footer: price and delete button */}
         <View style={styles.cardFooter}>
           <Text style={styles.price}>R{item.price.toFixed(2)}</Text>
           <TouchableOpacity 
@@ -74,16 +86,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ menuItems, onAddPress, onDelete
     </View>
   );
 
+  // -----------------------------
+  // Component Render
+  // -----------------------------
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {/* Header */}
+        {/* App header section */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Christoffel's App</Text>
           <Text style={styles.headerSubtitle}>Menu Management</Text>
         </View>
 
-        {/* Statistics Card */}
+        {/* Statistics card displaying total dishes */}
         <View style={styles.statsCard}>
           <View style={styles.statItem}>
             <Text style={styles.statNumber}>{menuItems.length}</Text>
@@ -91,14 +106,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ menuItems, onAddPress, onDelete
           </View>
         </View>
 
-        {/* Add Dish Button */}
+        {/* Add New Dish button */}
         <TouchableOpacity style={styles.addDishButton} onPress={onAddPress}>
           <Text style={styles.addDishButtonText}>+ Add New Dish</Text>
         </TouchableOpacity>
 
-        {/* Menu List */}
+        {/* Menu list section */}
         <View style={styles.menuSection}>
           <Text style={styles.sectionTitle}>Current Menu</Text>
+
+          {/* If no dishes exist, show an empty state message */}
           {menuItems.length === 0 ? (
             <View style={styles.emptyState}>
               <Text style={styles.emptyStateText}>No dishes added yet</Text>
@@ -107,11 +124,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ menuItems, onAddPress, onDelete
               </Text>
             </View>
           ) : (
+            // Otherwise, render list of menu items
             <FlatList
               data={menuItems}
               renderItem={renderMenuItem}
               keyExtractor={(item) => item.id}
-              scrollEnabled={false}
+              scrollEnabled={false} // Disable nested scrolling (handled by ScrollView)
             />
           )}
         </View>
@@ -120,7 +138,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ menuItems, onAddPress, onDelete
   );
 };
 
+// -----------------------------
+// Styles
+// -----------------------------
+
 const styles = StyleSheet.create({
+  // Root container with background color
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
@@ -128,6 +151,7 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  // Header section at top of screen
   header: {
     backgroundColor: '#ff0000ff',
     padding: 20,
@@ -144,6 +168,7 @@ const styles = StyleSheet.create({
     color: '#FFE5D9',
     marginTop: 5,
   },
+  // Card showing total menu items
   statsCard: {
     backgroundColor: '#fff',
     margin: 15,
@@ -151,8 +176,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'center',
-    elevation: 3,
-    shadowColor: '#000',
+    elevation: 3, // Android shadow
+    shadowColor: '#000', // iOS shadow
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -170,6 +195,7 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 5,
   },
+  // "Add Dish" button styling
   addDishButton: {
     backgroundColor: '#ff2525ff',
     marginHorizontal: 15,
@@ -187,6 +213,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  // Section for the current menu list
   menuSection: {
     margin: 15,
     marginBottom: 30,
@@ -197,6 +224,7 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 15,
   },
+  // Individual dish card styling
   menuCard: {
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -215,6 +243,7 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: 15,
   },
+  // Header within each menu card
   menuCardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -263,6 +292,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
+  // Empty state styling (when no dishes exist)
   emptyState: {
     backgroundColor: '#fff',
     padding: 40,
@@ -273,10 +303,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-  },
-  emptyStateIcon: {
-    fontSize: 48,
-    marginBottom: 15,
   },
   emptyStateText: {
     fontSize: 18,
@@ -291,4 +317,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Export the HomeScreen component as the default export
 export default HomeScreen;
