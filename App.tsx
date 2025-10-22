@@ -1,3 +1,11 @@
+/* Code Attribution
+   Author: Olivia Bennett
+   Title: React Native Multi-Screen Menu Management App
+   Date Published: 2025
+   Link/URL: https://github.com/oliviabennettdev/react-native-menu-manager
+   Date Accessed: 2025-09-29
+*/
+
 // Import necessary modules and components from React and React Native
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';

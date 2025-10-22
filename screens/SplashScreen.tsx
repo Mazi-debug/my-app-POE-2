@@ -1,3 +1,11 @@
+/* Code Attribution
+   Author: Aiden Thompson
+   Title: React Native Animated Splash Screen Component
+   Date Published: 2025
+   Link/URL: https://github.com/aidenthompsondev/react-native-splash-anim
+   Date Accessed: 2025-09-29
+*/
+
 // Import necessary modules from React and React Native
 import React, { useEffect } from 'react';
 import {

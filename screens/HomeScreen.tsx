@@ -1,3 +1,11 @@
+/* Code Attribution
+   Author: Christoffel Smith
+   Title: React Native Menu Management Screen
+   Date Published: 2025
+   Link/URL: https://github.com/christoffel-smith/menu-management
+   Date Accessed: 2025-09-29
+*/
+
 // Import core React and React Native components
 import React from 'react';
 import {

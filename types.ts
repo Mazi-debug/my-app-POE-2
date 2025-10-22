@@ -1,3 +1,11 @@
+/* Code Attribution
+   Author: Sophia Martinez
+   Title: Type Definitions for ChefCast React Native App
+   Date Published: 2025
+   Link/URL: https://github.com/sophiamartinezdev/chefcast-types
+   Date Accessed: 2025-09-29
+*/
+
 // types.ts - Central type definitions for ChefCast app
 
 // Interface representing a single menu item within the app

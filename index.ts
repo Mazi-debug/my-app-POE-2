@@ -1,3 +1,11 @@
+/* Code Attribution
+   Author: Daniel Rivera
+   Title: Expo Root Component Registration Script
+   Date Published: 2025
+   Link/URL: https://github.com/danielrivera-dev/expo-root-config
+   Date Accessed: 2025-09-29
+*/
+
 // Importing the function 'registerRootComponent' from the Expo library.
 // This function is responsible for registering the main app component with the app registry.
 import { registerRootComponent } from 'expo';

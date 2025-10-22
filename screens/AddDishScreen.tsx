@@ -1,3 +1,11 @@
+/* Code Attribution
+   Author: Bootstrap Team
+   Title: Bootstrap v5 Accessibility Helpers
+   Date Published: 2024
+   Link/URL: https://getbootstrap.com/docs/5.0/helpers/screen-readers/
+   Date Accessed: 2025-09-29
+*/
+
 // Import necessary React and React Native components and hooks
 import React, { useState } from 'react';
 import {
