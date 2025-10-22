@@ -1,8 +1,18 @@
+// Importing the function 'registerRootComponent' from the Expo library.
+// This function is responsible for registering the main app component with the app registry.
 import { registerRootComponent } from 'expo';
 
+// Importing the root component of the application (App.tsx or App.js),
+// which serves as the main entry point of the user interface.
 import App from './App';
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in Expo Go or in a native build,
-// the environment is set up appropriately
+// The registerRootComponent function automatically registers the main App component
+// as the root of the application. It wraps AppRegistry.registerComponent('main', () => App)
+// under the hood, ensuring that the app runs correctly in both environments:
+//
+// 1. Expo Go (development environment)
+// 2. Native builds (production or standalone apps)
+//
+// This setup ensures consistent initialization and environment configuration
+// regardless of how the app is launched.
 registerRootComponent(App);
