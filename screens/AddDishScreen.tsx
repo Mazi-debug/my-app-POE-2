@@ -1,3 +1,4 @@
+// Import necessary React and React Native components and hooks
 import React, { useState } from 'react';
 import {
   View,
@@ -12,23 +13,29 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-// Predefined courses
+// Predefined list of meal courses for dish categorization
 export const COURSES = ['Breakfast', 'Lunch', 'Dinner'];
 
+// Define the expected props for the AddDishScreen component
 interface AddDishScreenProps {
+  // Function passed from parent to handle adding a new dish
   onAddDish: (name: string, description: string, course: string, price: number, imageUrl?: string) => void;
+  // Function passed from parent to handle cancellation
   onCancel: () => void;
 }
 
+// Main functional component for adding a new dish
 const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) => {
+  // State hooks for managing form input fields
   const [dishName, setDishName] = useState('');
   const [description, setDescription] = useState('');
   const [selectedCourse, setSelectedCourse] = useState(COURSES[0]);
   const [price, setPrice] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
+  // Handles validation and submission of a new dish
   const handleAddDish = () => {
-    // Validation
+    // Input validation for required fields
     if (!dishName.trim()) {
       Alert.alert('Error', 'Please enter a dish name');
       return;
@@ -42,28 +49,30 @@ const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) =>
       return;
     }
 
-    // Call the parent function to add the dish
+    // Call parent function to add dish to menu
     onAddDish(dishName, description, selectedCourse, parseFloat(price), imageUrl.trim() || undefined);
 
-    // Clear form
+    // Reset form fields
     setDishName('');
     setDescription('');
     setSelectedCourse(COURSES[0]);
     setPrice('');
     setImageUrl('');
 
+    // Success feedback alert
     Alert.alert('Success', 'Dish added to menu!', [
       { text: 'OK', onPress: onCancel }
     ]);
   };
 
   return (
+    // Ensures input fields adjust properly when keyboard is open (especially on iOS)
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView style={styles.scrollView}>
-        {/* Header */}
+        {/* Header Section */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Add New Dish</Text>
           <Text style={styles.headerSubtitle}>Fill in the details below</Text>
@@ -71,6 +80,7 @@ const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) =>
 
         {/* Form Section */}
         <View style={styles.formSection}>
+          {/* Dish Name Input */}
           <Text style={styles.label}>Dish Name *</Text>
           <TextInput
             style={styles.input}
@@ -80,6 +90,7 @@ const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) =>
             placeholderTextColor="#999"
           />
 
+          {/* Description Input */}
           <Text style={styles.label}>Description *</Text>
           <TextInput
             style={[styles.input, styles.textArea]}
@@ -91,6 +102,7 @@ const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) =>
             placeholderTextColor="#999"
           />
 
+          {/* Course Picker Dropdown */}
           <Text style={styles.label}>Course *</Text>
           <View style={styles.pickerWrapper}>
             <Picker
@@ -108,6 +120,7 @@ const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) =>
 
           <View style={styles.spacer} />
 
+          {/* Optional Image URL Input */}
           <Text style={styles.label}>Image URL (Optional)</Text>
           <TextInput
             style={styles.input}
@@ -118,6 +131,8 @@ const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) =>
             placeholderTextColor="#999"
             autoCapitalize="none"
           />
+
+          {/* Price Input */}
           <Text style={styles.label}>Price (R) *</Text>
           <TextInput
             style={styles.input}
@@ -128,11 +143,12 @@ const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) =>
             placeholderTextColor="#999"
           />
 
-          {/* Buttons */}
+          {/* Submit Button */}
           <TouchableOpacity style={styles.addButton} onPress={handleAddDish}>
             <Text style={styles.addButtonText}>Add Dish</Text>
           </TouchableOpacity>
 
+          {/* Cancel Button */}
           <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </TouchableOpacity>
@@ -142,6 +158,7 @@ const AddDishScreen: React.FC<AddDishScreenProps> = ({ onAddDish, onCancel }) =>
   );
 };
 
+// Style definitions for the AddDishScreen component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -248,4 +265,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Export the AddDishScreen component as default
 export default AddDishScreen;
